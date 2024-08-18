@@ -75,17 +75,21 @@ body {
 }
 
 @media only screen and (max-width: 800px) {
+    nav {
+        &#nav{
+            left: -250px;
+
+            &:has(.right input:checked) {
+                left: 0px;
+            }
+        }
+        .left {
+            max-width: 250px;
+        }
+    }
     main {
         padding: 0 !important;
         padding-left: 60px !important;
         flex-direction: column !important;
-        /* align-items: flex-end !important; */
-
-        p {
-            overflow-y: scroll;
-            height: 100%;
-            width: fit-content;
-            text-align: center;
-        }
     }
 }
