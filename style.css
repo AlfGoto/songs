@@ -24,12 +24,12 @@ body {
             padding: 20px;
             gap: 10px;
 
-            div{
+            div {
                 background-color: white;
                 padding: 10px;
                 user-select: none;
 
-                &:hover{
+                &:hover {
                     background-color: rgb(228, 228, 228);
                 }
             }
@@ -57,18 +57,34 @@ body {
         }
     }
 
-    main{
+    main {
         height: 100svh;
         width: 100svw;
-        padding: 75px;
+        padding: 3svw;
         display: flex;
         align-items: center;
         justify-content: space-around;
 
-        p{
+        p {
             overflow-y: scroll;
             height: 100%;
-            width: 50%;
+            width: fit-content;
+            text-align: center;
+        }
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    main {
+        padding: 0 !important;
+        padding-left: 60px !important;
+        flex-direction: column !important;
+        /* align-items: flex-end !important; */
+
+        p {
+            overflow-y: scroll;
+            height: 100%;
+            width: fit-content;
             text-align: center;
         }
     }
