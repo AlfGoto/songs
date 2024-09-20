@@ -1,3 +1,20 @@
+var noSleep = new NoSleep();
+
+var wakeLockEnabled = false;
+var toggleEl = document.querySelector("#toggle");
+toggleEl.addEventListener('click', function () {
+    if (!wakeLockEnabled) {
+        noSleep.enable(); 
+        wakeLockEnabled = true;
+        toggleEl.value = "Wake Lock is enabled";
+    } else {
+        noSleep.disable(); 
+        wakeLockEnabled = false;
+        toggleEl.value = "Wake Lock is disabled";
+    }
+}, false);
+
+
 let musics = [
     "Je l'aime à mourir",
     "Les murs de poussière",
@@ -22,7 +39,7 @@ musics.forEach(e => {
 
         fetch("lyrics/" + e)
             .then(l => l.text())
-            .then(l => { 
+            .then(l => {
                 let lyricsP = document.createElement('p')
                 lyricsP.innerText = l
                 main.appendChild(lyricsP)
@@ -34,6 +51,12 @@ musics.forEach(e => {
     }
 })
 
+document.addEventListener('keypress', e => {
+    if (e.key === " ") {
+        document.getElementsByTagName('audio')[0].remove()
+        main.innerHTML += `<audio src="${"mp3/" + currentSong + ".mp3"}" controls autoplay></audio>`
+    }
+})
 
 
 
