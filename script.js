@@ -1,24 +1,8 @@
-var noSleep = new NoSleep();
-
-var wakeLockEnabled = false;
-var toggleEl = document.querySelector("#toggle");
-toggleEl.addEventListener('click', function () {
-    if (!wakeLockEnabled) {
-        noSleep.enable(); 
-        wakeLockEnabled = true;
-        toggleEl.value = "Wake Lock is enabled";
-    } else {
-        noSleep.disable(); 
-        wakeLockEnabled = false;
-        toggleEl.value = "Wake Lock is disabled";
-    }
-}, false);
-
-
 let musics = [
     "Je l'aime à mourir",
     "Les murs de poussière",
     "Je suis malade",
+    "L'envie",
     "Comme d'habitude",
 ]
 
