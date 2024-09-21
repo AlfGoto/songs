@@ -12,6 +12,35 @@ let checkbox = document.getElementById('navrightcheckbox')
 let main = document.getElementsByTagName('main')[0]
 
 musics.forEach(e => {
+    createInLeft(e)
+    createInMainMenu(e)
+})
+
+function createInMainMenu(e) {
+    let div = document.createElement('div')
+    div.innerHTML = e
+    div.classList.add('mainMusic')
+    main.appendChild(div)
+
+    div.onclick = () => {
+        currentSong = e
+        main.innerHTML = ''
+
+        fetch("lyrics/" + e)
+            .then(l => l.text())
+            .then(l => {
+                let lyricsP = document.createElement('p')
+                lyricsP.innerText = l
+                main.appendChild(lyricsP)
+                if(checkbox.checked)checkbox.click()
+
+                main.innerHTML += `<audio src="${"mp3/" + e + ".mp3"}" controls autoplay></audio>`
+            })
+            .catch(l => { console.log(l) })
+    }
+}
+
+function createInLeft(e) {
     let div = document.createElement('div')
     div.innerHTML = e
     left.appendChild(div)
@@ -27,13 +56,24 @@ musics.forEach(e => {
                 let lyricsP = document.createElement('p')
                 lyricsP.innerText = l
                 main.appendChild(lyricsP)
-                document.getElementById('navrightcheckbox').click()
+                checkbox.click()
 
                 main.innerHTML += `<audio src="${"mp3/" + e + ".mp3"}" controls autoplay></audio>`
             })
             .catch(l => { console.log(l) })
     }
-})
+}
+
+
+
+
+
+
+
+
+
+
+
 
 document.addEventListener('keypress', e => {
     if (e.key === " ") {

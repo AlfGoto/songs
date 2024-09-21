@@ -72,6 +72,20 @@ body {
             width: fit-content;
             text-align: center;
         }
+
+        .mainMusic {
+            background-color: rgb(228, 228, 228);
+            padding: 10px;
+            user-select: none;
+
+            &:hover {
+                background-color: gray;
+                color: white;
+            }
+        }
+        &:has(.mainMusic){
+            flex-wrap: wrap;
+        }
     }
 }
 
