@@ -2,6 +2,7 @@ let musics = [
     "Je l'aime à mourir",
     "Les murs de poussière",
     "Je suis malade",
+    "Hier encore",
     "L'envie",
     "Comme d'habitude",
 ]
