@@ -13,6 +13,8 @@ let checkbox = document.getElementById('navrightcheckbox')
 let main = document.getElementsByTagName('main')[0]
 
 musics.forEach(e => {
+    if (!e.checkPoint) e.checkPoint = []
+    e.checkPoint.unshift({ name: "Début", time: 0 })
     createInLeft(e)
     createInMainMenu(e)
 })
@@ -75,7 +77,7 @@ function createCheckpoints() {
 function setAllButtonsClicks() {
     const allButtons = document.querySelectorAll("[time]")
     Array.from(allButtons).forEach(butt => {
-        butt.onclick = function () { document.getElementById("audio").currentTime =butt.getAttribute("time") }
+        butt.onclick = function () { document.getElementById("audio").currentTime = butt.getAttribute("time") }
     })
 }
 
