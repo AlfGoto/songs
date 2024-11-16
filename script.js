@@ -1,10 +1,10 @@
 let musics = [
-    "Je l'aime à mourir",
-    "Les murs de poussière",
-    "Je suis malade",
-    "Hier encore",
-    "L'envie",
-    "Comme d'habitude",
+    { name: "Je l'aime à mourir" },
+    { name: "Les murs de poussière" },
+    { name: "Je suis malade", checkPoint: [{ name: "Premier Refrain", time: 53 }, { name: "Second Couplet", time: 97 }] },
+    { name: "Hier encore" },
+    { name: "L'envie" },
+    { name: "Comme d'habitude" },
 ]
 
 let currentSong = ''
@@ -17,61 +17,67 @@ musics.forEach(e => {
     createInMainMenu(e)
 })
 
-function createInMainMenu(e) {
+function createInMainMenu(music) {
     let div = document.createElement('div')
-    div.innerHTML = e
+    div.innerHTML = music.name
     div.classList.add('mainMusic')
     main.appendChild(div)
 
-    div.onclick = () => {
-        currentSong = e
-        main.innerHTML = ''
-
-        fetch("lyrics/" + e)
-            .then(l => l.text())
-            .then(l => {
-                let lyricsP = document.createElement('p')
-                lyricsP.innerText = l
-                main.appendChild(lyricsP)
-                if(checkbox.checked)checkbox.click()
-
-                main.innerHTML += `<audio src="${"mp3/" + e + ".mp3"}" controls autoplay></audio>`
-            })
-            .catch(l => { console.log(l) })
-    }
+    div.onclick = () => { getMusic(music) }
 }
 
-function createInLeft(e) {
+function createInLeft(music) {
     let div = document.createElement('div')
-    div.innerHTML = e
+    div.innerHTML = music.name
     left.appendChild(div)
 
-    div.onclick = () => {
-        if (currentSong === e) return
-        currentSong = e
-        main.innerHTML = ''
+    div.onclick = () => { getMusic(music) }
+}
 
-        fetch("lyrics/" + e)
-            .then(l => l.text())
-            .then(l => {
-                let lyricsP = document.createElement('p')
-                lyricsP.innerText = l
-                main.appendChild(lyricsP)
-                checkbox.click()
+function getMusic(music) {
+    if (currentSong === music) return
+    currentSong = music
+    main.innerHTML = ''
 
-                main.innerHTML += `<audio src="${"mp3/" + e + ".mp3"}" controls autoplay></audio>`
-            })
-            .catch(l => { console.log(l) })
-    }
+    fetch("lyrics/" + currentSong.name)
+        .then(l => l.text())
+        .then(l => { openMusic(l) })
+        .catch(l => { console.log(l) })
+}
+
+function openMusic(lyrics) {
+    let lyricsP = document.createElement('p')
+    lyricsP.innerText = lyrics
+    main.appendChild(lyricsP)
+    if (checkbox.checked) checkbox.click()
+
+    if (currentSong.checkPoint) createCheckpoints()
+
+    main.innerHTML += `<audio id="audio" src="${"mp3/" + currentSong.name + ".mp3"}" controls autoplay></audio>`
+
+    setAllButtonsClicks()
+
 }
 
 
+function createCheckpoints() {
+    let checkPointsdiv = main.appendChild(document.createElement('div'))
+    checkPointsdiv.id = "checkPointDiv"
 
+    currentSong.checkPoint.forEach((check) => {
+        let button = document.createElement('button')
+        checkPointsdiv.appendChild(button)
+        button.innerHTML = check.name
+        button.setAttribute("time", check.time)
+    })
+}
 
-
-
-
-
+function setAllButtonsClicks() {
+    const allButtons = document.querySelectorAll("[time]")
+    Array.from(allButtons).forEach(butt => {
+        butt.onclick = function () { document.getElementById("audio").currentTime =butt.getAttribute("time") }
+    })
+}
 
 
 
@@ -82,16 +88,3 @@ document.addEventListener('keypress', e => {
         main.innerHTML += `<audio src="${"mp3/" + currentSong + ".mp3"}" controls autoplay></audio>`
     }
 })
-
-
-
-
-
-
-
-
-
-// fetch("lyrics/Je l'aime à mourir")
-// .then(e=>e.text())
-// .then(e=>{console.log(e)})
-// .catch(e=>{console.log(e)})

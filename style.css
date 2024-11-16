@@ -83,8 +83,29 @@ body {
                 color: white;
             }
         }
-        &:has(.mainMusic){
+
+        &:has(.mainMusic) {
             flex-wrap: wrap;
+        }
+
+        #checkPointDiv {
+            min-width: 100%;
+            height: 50px;
+            display: flex;
+            gap: 5px;
+            padding: 0 5px;
+
+            button {
+                background-color: rgb(226, 226, 226);
+                padding: 5px;
+                height: 100%;
+                border: none;
+                transition: all .2s linear;
+
+                &:hover {
+                    background-color: rgb(170, 170, 170);
+                }
+            }
         }
     }
 }
